@@ -87,22 +87,53 @@ def main():
             img_name = output_folder + label.lower() + '_' + random_string + '.jpg'
             camera.capture(img_name)
 
+        ########################################################################
+        # Write your code inside this region
+        #
+        # 1. Light up the RGB LED with a breathing pattern at the start
+
         leds.pattern = Pattern.breathe(1000)
         leds.update(Leds.rgb_pattern(Color.RED))
+
+        # 2. Wait until the button is pressed
+
         board.button.wait_for_press()
         board.button.wait_for_release()
 
+        #
+        # Do not edit anything outside this region
+        ########################################################################
+
+        # 3. Capture `num_images` training images in total
+        #    - Use the `capture_image` function
+
         for i in range(num_images):
             capture_image()
+
+            ####################################################################
+            # Write your code inside this region
+            #
+            # 4. For each image taken, light up the RGB LED once and play a beep
+
             beep = ['C4e']
             toneplayer.play(*beep)
             leds.update(Leds.rgb_on(Color.GREEN))
             time.sleep(0.2)
             leds.update(Leds.rgb_off())
+
+            #
+            # Do not edit anything outside this region
+            ####################################################################
+
             print('Captured', str(i + 1), 'out of', str(num_images))
             time.sleep(1)
 
         camera.stop_preview()
+
+        ########################################################################
+        # Write your code inside this region
+        #
+        # 5. Play a song when the collection is completed
 
         imperial_march = [
             'A3q', 'A3q', 'A3q', 'F3e', 'C4e',
@@ -111,6 +142,10 @@ def main():
             'g3q', 'F3e', 'C4e', 'A3h',
         ]
         toneplayer.play(*imperial_march)
+
+        #
+        # Do not edit anything outside this region
+        ########################################################################
 
 if __name__ == '__main__':
     main()
