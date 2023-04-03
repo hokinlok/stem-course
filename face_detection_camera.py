@@ -48,7 +48,7 @@ def main():
         camera.start_preview()
 
         # Annotator renders in software so use a smaller size and scale results
-        # for increased performace.
+        # for increased performance.
         annotator = Annotator(camera, dimensions=(320, 240))
         scale_x = 320 / 1640
         scale_y = 240 / 1232
