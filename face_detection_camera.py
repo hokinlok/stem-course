@@ -24,9 +24,22 @@ import argparse
 
 from picamera import PiCamera
 
+from aiy.board import Board
+from aiy.leds import Color, Leds, Pattern
+from aiy.pins import BUZZER_GPIO_PIN
+from aiy.toneplayer import TonePlayer
 from aiy.vision.inference import CameraInference
 from aiy.vision.models import face_detection
 from aiy.vision.annotator import Annotator
+
+# Board (controls the top button)
+board = Board()
+
+# Leds (controls the LED in the top button, and the privacy LED)
+leds = Leds()
+
+# Tone player (plays music using the piezo buzzer)
+toneplayer = TonePlayer(BUZZER_GPIO_PIN)
 
 
 def avg_joy_score(faces):
@@ -68,9 +81,51 @@ def main():
                     annotator.bounding_box(transform(face.bounding_box), fill=0)
                 annotator.update()
 
+                ################################################################
+                # Write your code inside this region
+                #
+                # Play with the RGB LED and the piezo buzzer here.
+                #
+                # 1. Light up the RGB LED in different colors according to the
+                #    number of faces detected
+                #    - e.g. Off if 0 faces, RED if 1 faces, YELLOW if 2 faces,
+                #      etc.
+                #    - Hint: use `len(faces)` to get the number of faces
+                # 2. Play a beep if any faces are detected
+                #    - Extra: Change the pitch according to the number of faces
+                #      detected
+
+                if len(faces) == 0:
+                    leds.update(Leds.rgb_off())
+                elif len(faces) == 1:
+                    leds.update(Leds.rgb_on(Color.RED))
+                    beep = ['C3e']
+                    toneplayer.play(*beep)
+                elif len(faces) == 2:
+                    leds.update(Leds.rgb_on(Color.YELLOW))
+                    beep = ['E3e']
+                    toneplayer.play(*beep)
+                elif len(faces) == 3:
+                    leds.update(Leds.rgb_on(Color.GREEN))
+                    beep = ['G3e']
+                    toneplayer.play(*beep)
+                elif len(faces) == 4:
+                    leds.update(Leds.rgb_on(Color.BLUE))
+                    beep = ['C4e']
+                    toneplayer.play(*beep)
+                else:
+                    leds.update(Leds.rgb_on(Color.PURPLE))
+                    beep = ['E4e']
+                    toneplayer.play(*beep)
+
+                #
+                # Do not edit anything outside this region
+                ################################################################
+
                 print('#%05d (%5.2f fps): num_faces=%d, avg_joy_score=%.2f' %
                     (inference.count, inference.rate, len(faces), avg_joy_score(faces)))
 
+        leds.update(Leds.rgb_off())
         camera.stop_preview()
 
 
