@@ -18,8 +18,21 @@ import argparse
 
 from picamera import PiCamera, Color
 
+from aiy.board import Board
+from aiy.leds import Color, Leds, Pattern
+from aiy.pins import BUZZER_GPIO_PIN
+from aiy.toneplayer import TonePlayer
 from aiy.vision import inference
 from aiy.vision.models import utils
+
+# Board (controls the top button)
+board = Board()
+
+# Leds (controls the LED in the top button, and the privacy LED)
+leds = Leds()
+
+# Tone player (plays music using the piezo buzzer)
+toneplayer = TonePlayer(BUZZER_GPIO_PIN)
 
 
 def read_labels(label_path):
@@ -29,7 +42,8 @@ def read_labels(label_path):
 
 def get_message(result, threshold, top_k):
     if result:
-        return 'Detecting:\n %s' % '\n'.join(result)
+        text = [' %s (%.2f)' % (label, prob) for label, prob in result]
+        return 'Detecting:\n %s' % '\n'.join(text)
 
     return 'Nothing detected when threshold=%.2f, top_k=%d' % (threshold, top_k)
 
@@ -44,7 +58,7 @@ def process(result, labels, tensor_name, threshold, top_k):
     pairs = [pair for pair in enumerate(probs) if pair[1] > threshold]
     pairs = sorted(pairs, key=lambda pair: pair[1], reverse=True)
     pairs = pairs[0:top_k]
-    return [' %s (%.2f)' % (labels[index], prob) for index, prob in pairs]
+    return [(labels[index], prob) for index, prob in pairs]
 
 
 def main():
@@ -97,6 +111,36 @@ def main():
                     # PiCamera text annotation only supports ascii.
                     camera.annotate_text = '\n %s' % message.encode(
                         'ascii', 'backslashreplace').decode('ascii')
+                    
+                top_result = processed_result[0]
+                label = top_result[0]
+
+                ################################################################
+                # Write your code inside this region
+                #
+
+                if label == 'scissors':
+                    leds.update(Leds.rgb_on(Color.RED))
+                    beep = ['C3e']
+                    toneplayer.play(*beep)
+                elif label == 'chair':
+                    leds.update(Leds.rgb_on(Color.YELLOW))
+                    beep = ['E3e']
+                    toneplayer.play(*beep)
+                elif label == 'umbrella':
+                    leds.update(Leds.rgb_on(Color.GREEN))
+                    beep = ['G3e']
+                    toneplayer.play(*beep)
+                elif label == 'door':
+                    leds.update(Leds.rgb_on(Color.BLUE))
+                    beep = ['C4e']
+                    toneplayer.play(*beep)
+                else:
+                    leds.update(Leds.rgb_off())
+
+                #
+                # Do not edit anything outside this region
+                ################################################################
 
         if args.preview:
             camera.stop_preview()
