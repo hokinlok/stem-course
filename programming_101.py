@@ -17,15 +17,3 @@ elif side_1 == side_2 or side_1 == side_3 or side_2 == side_3:
 else:
   print("It is a triangle.")
 # It is an equilateral triangle!
-
-
-adjectives = ["handsome", "smart", "kind", "tall"]
-for word in adjectives:
-  sentence = "I am very " + word + "."
-  print(sentence)
-
-
-print("Multiples of 3:")
-for index in range(10):
-  multiple = 3 * (index + 1)
-  print(str(index + 1) + ": " + str(multiple))
