@@ -95,28 +95,7 @@ def main():
                 #    - Extra: Change the pitch according to the number of faces
                 #      detected
 
-                if len(faces) == 0:
-                    leds.update(Leds.rgb_off())
-                elif len(faces) == 1:
-                    leds.update(Leds.rgb_on(Color.RED))
-                    beep = ['C3e']
-                    toneplayer.play(*beep)
-                elif len(faces) == 2:
-                    leds.update(Leds.rgb_on(Color.YELLOW))
-                    beep = ['E3e']
-                    toneplayer.play(*beep)
-                elif len(faces) == 3:
-                    leds.update(Leds.rgb_on(Color.GREEN))
-                    beep = ['G3e']
-                    toneplayer.play(*beep)
-                elif len(faces) == 4:
-                    leds.update(Leds.rgb_on(Color.BLUE))
-                    beep = ['C4e']
-                    toneplayer.play(*beep)
-                else:
-                    leds.update(Leds.rgb_on(Color.PURPLE))
-                    beep = ['E4e']
-                    toneplayer.play(*beep)
+
 
                 #
                 # Do not edit anything outside this region

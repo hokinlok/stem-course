@@ -92,13 +92,11 @@ def main():
         #
         # 1. Light up the RGB LED with a breathing pattern at the start
 
-        leds.pattern = Pattern.breathe(1000)
-        leds.update(Leds.rgb_pattern(Color.RED))
+
 
         # 2. Wait until the button is pressed
 
-        board.button.wait_for_press()
-        board.button.wait_for_release()
+
 
         #
         # Do not edit anything outside this region
@@ -115,11 +113,7 @@ def main():
             #
             # 4. For each image taken, light up the RGB LED once and play a beep
 
-            beep = ['C4e']
-            toneplayer.play(*beep)
-            leds.update(Leds.rgb_on(Color.GREEN))
-            time.sleep(0.2)
-            leds.update(Leds.rgb_off())
+
 
             #
             # Do not edit anything outside this region
@@ -135,13 +129,7 @@ def main():
         #
         # 5. Play a song when the collection is completed
 
-        imperial_march = [
-            'A3q', 'A3q', 'A3q', 'F3e', 'C4e',
-            'A3q', 'F3e', 'C4e', 'A3h',
-            'E4q', 'E4q', 'E4q', 'F4e', 'C4e',
-            'g3q', 'F3e', 'C4e', 'A3h',
-        ]
-        toneplayer.play(*imperial_march)
+
 
         #
         # Do not edit anything outside this region

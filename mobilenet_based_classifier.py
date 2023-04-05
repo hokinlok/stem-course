@@ -119,24 +119,7 @@ def main():
                 # Write your code inside this region
                 #
 
-                if label == 'scissors':
-                    leds.update(Leds.rgb_on(Color.RED))
-                    beep = ['C3e']
-                    toneplayer.play(*beep)
-                elif label == 'chair':
-                    leds.update(Leds.rgb_on(Color.YELLOW))
-                    beep = ['E3e']
-                    toneplayer.play(*beep)
-                elif label == 'umbrella':
-                    leds.update(Leds.rgb_on(Color.GREEN))
-                    beep = ['G3e']
-                    toneplayer.play(*beep)
-                elif label == 'door':
-                    leds.update(Leds.rgb_on(Color.BLUE))
-                    beep = ['C4e']
-                    toneplayer.play(*beep)
-                else:
-                    leds.update(Leds.rgb_off())
+
 
                 #
                 # Do not edit anything outside this region
