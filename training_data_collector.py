@@ -71,7 +71,7 @@ def main():
 
     args = parser.parse_args()
 
-    with PiCamera(sensor_mode=4, resolution=(1640, 1232), framerate=30) as camera:
+    with PiCamera(sensor_mode=4, resolution=(1640, 1232), framerate=4) as camera:
         # Start the camera stream.
         camera.start_preview()
 

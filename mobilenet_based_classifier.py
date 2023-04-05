@@ -78,7 +78,7 @@ def main():
         compute_graph=utils.load_compute_graph(args.model_path))
     labels = read_labels(args.label_path)
 
-    with PiCamera(sensor_mode=4, resolution=(1640, 1232), framerate=30) as camera:
+    with PiCamera(sensor_mode=4, resolution=(1640, 1232), framerate=4) as camera:
         if args.preview:
             camera.start_preview()
 
