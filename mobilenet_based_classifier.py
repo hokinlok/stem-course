@@ -16,7 +16,7 @@
 """Script to run generic MobileNet based classification model."""
 import argparse
 
-from picamera import PiCamera, Color
+from picamera import PiCamera, Color as PiColor
 
 from aiy.board import Board
 from aiy.leds import Color, Leds, Pattern
@@ -106,8 +106,8 @@ def main():
                 print(message)
 
                 if args.preview:
-                    camera.annotate_foreground = Color('black')
-                    camera.annotate_background = Color('white')
+                    camera.annotate_foreground = PiColor('black')
+                    camera.annotate_background = PiColor('white')
                     # PiCamera text annotation only supports ascii.
                     camera.annotate_text = '\n %s' % message.encode(
                         'ascii', 'backslashreplace').decode('ascii')
