@@ -1,0 +1,17 @@
+[Unit]
+Description=Mobilenet Based Classifier
+Requires=dev-vision_spicomm.device
+After=dev-vision_spicomm.device
+Wants=aiy-board-info.service
+After=aiy-board-info.service
+
+[Service]
+Type=simple
+Restart=no
+User=pi
+Environment=AIY_BOARD_NAME=AIY-Board
+EnvironmentFile=-/run/aiy-board-info
+ExecStart=/usr/bin/python3 /home/pi/stem-course/mobilenet_based_classifier.py --model_path /home/pi/retrained_graph.binaryproto --label_path /home/pi/retrained_labels.txt --input_height 160 --input_width 160 --input_layer input --output_layer final_result
+
+[Install]
+WantedBy=multi-user.target
